@@ -24,3 +24,13 @@ This repository contains a SystemVerilog-based Verification Environment for an A
 - [ ] **Day 8:** Functional Coverage & SystemVerilog Assertions (SVA)
 - [ ] **Day 9:** Top Testbench Integration & GTKWave Simulation Analysis
 - [ ] **Day 10:** Final Documentation & Repository Cleanup
+## Simulation & Verification Results
+
+### Signal Waveforms (GTKWave)
+![AHB-APB Bridge Simulation Waveform](sim/waveform.png)
+
+### Verification Summary
+* **Simulator:** Icarus Verilog (`iverilog`) + `vvp`
+* **Waveform Viewer:** GTKWave (`sim/dump.vcd`)
+* **Test Outcome:** Directed transactions executed successfully. AHB-to-APB timing, phase transitions (`PSEL`, `PENABLE`), and bus data verified via waveform analysis.
+*
