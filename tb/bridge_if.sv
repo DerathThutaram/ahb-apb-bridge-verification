@@ -35,5 +35,19 @@ interface bridge_if (input logic HCLK, input logic HRESETn);
     // Modports for Environment Components
     modport DRV (clocking drv_cb, input HRESETn);
     modport MON (clocking mon_cb, input HRESETn);
+// SVA 1: PENABLE must go HIGH 1 cycle after PSEL goes HIGH
+    property p_enable_timing;
+        @(posedge HCLK) disable iff (!HRESETn)
+        $rose(PSEL) |==> PENABLE;
+    endproperty
+    assert_enable_timing: assert property (p_enable_timing)
+        else $error("SVA ERROR: PENABLE failed to go HIGH after PSEL!");
 
+    // SVA 2: PSEL must remain active while waiting for PREADY
+    property p_psel_stable;
+        @(posedge HCLK) disable iff (!HRESETn)
+        (PSEL && !PREADY) |=> PSEL;
+    endproperty
+    assert_psel_stable: assert property (p_psel_stable)
+        else $error("SVA ERROR: PSEL dropped before PREADY was asserted!");
 endinterface
